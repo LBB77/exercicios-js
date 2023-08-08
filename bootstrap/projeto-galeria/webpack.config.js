@@ -24,22 +24,18 @@ module.exports = {
     },
     optimization: {
         minimize: true,
-        minimizer:
-            new cssminimizerwebpackplugin({})
+        minimizer: [new terserwebpackplugin(),
+                   new cssminimizerwebpackplugin ({})]
     },
     
     plugins: [
         new MiniCssExtractPlugin({ filename: 'estilo.css' }),
-        new terserwebpackplugin({
-            parallel: true,
-            terserOptions: {
-                ecma: 6,
-            },
-        }),
-        new CopyWebpackPlugin([
-            { context: 'src/', from: '**/*.html' },
-            { context: 'src/', from: 'imgs/**/*' }
-        ])
+        new CopyWebpackPlugin({
+            patterns: [
+                { from: '**/*.html', context: 'src/' },
+                { from: 'imgs/**/*', context: 'src/' },
+            ],
+            }),
     ],
     module: {
         rules: [{
